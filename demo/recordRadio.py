@@ -1,5 +1,6 @@
 # coding=utf8
 import wave
+from ast import literal_eval
 
 import pyaudio
 
@@ -34,10 +35,11 @@ class recode():
         wf.setnchannels(CHANNELS)
         wf.setsampwidth(p.get_sample_size(FORMAT))
         wf.setframerate(RATE)
-        wf.writeframes(''.join(frames))
+        wf.writeframes(literal_eval(frames))
+        '''wf.writeframes(''.join(frames))'''
         wf.close()
 
 
 if __name__ == '__main__':
     a = recode()
-    a.recode(RECORD_SECONDS=30, WAVE_OUTPUT_FILENAME='record_test.wav')
+    a.recode(RECORD_SECONDS=10, WAVE_OUTPUT_FILENAME='record_test.wav')

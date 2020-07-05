@@ -3,23 +3,31 @@ import numpy as np
 from scipy.io import wavfile
 
 
-#sampFreq, snd = wavfile.read('aa.wav')
-sampFreq, snd = wavfile.read('440_sine.wav')
-
-print(snd.dtype, "\n")
+sampFreq, snd = wavfile.read('resource/car_1.wav')
+#sampFreq, snd = wavfile.read('440_sine.wav')
+#sampFreq, snd = wavfile.read('20200626_095844.wav')
+print("采样率=",sampFreq)
+print("编码字节数=",snd.dtype, "\n")
 snd = snd / (2.**15)
-
-print(5060 / sampFreq, "\n")
-
+print("采样点数=",snd.shape[0],",通道数=",snd.shape[1], "\n")
+#表示文件包含2个通道，5060个采样点。结合采样率（sampFreq = 44110），可得信号持续时长为114ms：
+print("采样点数/采样率=时间（",snd.shape[0] / sampFreq, "）秒\n")
+print("采样点数/采样率=时间（",len(snd)/ sampFreq, "）秒\n")
+#声道1
 s1 = snd[:, 0]
-
+#声道2
+s2 = snd[:, 1]
 #timeArray = np.arange(0, 5060.0, 1)
 timeArray = np.arange(0, len(snd), 1)
 timeArray = timeArray / sampFreq
-print(timeArray)
+print("时间",timeArray)
+#或者 np.arange(0,采样点)*（1.0/采样率）
+time = np.arange(0,len(snd))*(1.0/sampFreq)
+print("时间",time)
 
 #plt.plot(timeArray, s1, color='black')
 plt.plot(timeArray, s1, color='k')
+plt.plot(timeArray, s2, color='c')
 plt.ylabel('Amplitude')
 plt.xlabel('Time (ms)')
 

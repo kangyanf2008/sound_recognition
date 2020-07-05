@@ -116,7 +116,7 @@ def getBin(y,sr,sampling_interval):
 
 if __name__ == "__main__":
     # 设置音乐文件的路径
-    audio_path = 'aa.wav'
+    audio_path = 'resource/aa.wav'
     #audio_path = librosa.util.example_audio_file()
 
     y, sr = librosa.load(audio_path, sr=None)

@@ -3,7 +3,7 @@ import numpy as np
 from scipy.io import wavfile
 
 
-sampFreq, snd = wavfile.read('440_sine.wav')
+sampFreq, snd = wavfile.read('resource/car_2.wav')
 
 print(snd.dtype, "\n")
 snd = snd / (2.**15)

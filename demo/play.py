@@ -24,6 +24,26 @@ class voice():
             f = wave.open(filepath, 'rb')
             params = f.getparams()
             self.nchannels, self.sampwidth, self.framerate, self.nframes = params[:4]
+            '''
+                nchannels:声道数
+                sampwidth:量化位数（byte）
+                framerate:采样频率
+                nframes:采样点数 
+            '''
+            params = f.getparams()
+            Channels = f.getnchannels()
+            SampleRate = f.getframerate()
+            bit_type = f.getsampwidth() * 8
+            frames = f.getnframes()
+            # Duration 也就是音频时长 = 采样点数/采样率
+            Duration = wav_time = frames / float(SampleRate)  # 单位为s
+            print("音频头参数：", params)
+            print("通道数(Channels)：", Channels)
+            print("采样率(SampleRate)：", SampleRate)
+            print("比特(Precision)：", bit_type)
+            print("采样点数(frames)：", frames)
+            print("帧数或者时间(Duration)：", Duration)
+            self.duration = Duration
             str_data = f.readframes(self.nframes)
             #self.wave_data = np.fromstring(str_data, dtype=np.short)
             self.wave_data = np.fromstring(str_data, dtype=np.uint8)
@@ -46,6 +66,9 @@ class voice():
         self.high_point = []
         #blocks_size = self.framerate / frames  # block_size为每一块的frame数量
         # blocks_num = self.nframes / blocks_size  # 将音频分块的数量
+        if frames == 0:
+            frames = int(self.nframes/self.duration)
+
         blocks_size = int(self.framerate / frames)  # block_size为每一块的frame数量
         blocks_num = 0
         if self.nframes % blocks_size == 0:
@@ -89,8 +112,9 @@ class voice():
 
 if __name__ == '__main__':
     p = voice()
-    p.loaddata("../aa.wav")
-    p.fft()
+    #p.loaddata("../aa.wav")
+    p.loaddata("../20200626_095844.wav")
+    p.fft(frames=0)
 
     #p.play('../aa.wav')
     #print(p.name)

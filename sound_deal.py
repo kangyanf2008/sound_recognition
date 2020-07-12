@@ -97,8 +97,8 @@ while i < sampNum:
     sampData[i][1] = p2[i * sampFreq:(i + 1) * sampFreq]
     i = i + 1
 
+print("#####################################################\n")
 print(sampData)
-
 
 #绘制的频谱图如下所示。注意图中y轴是能量的对数10*log10(p)，单位分贝；x轴是频率/1000，单位kHz。
 freqArray = np.arange(0, nUniquePts, 1.0) * (sampFreq / n)
